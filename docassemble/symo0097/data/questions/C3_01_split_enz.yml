@@ -1,0 +1,126 @@
+---
+objects:
+  - endpoint: DADict
+---
+mandatory: True
+question: Welcome!
+subquestion: |
+  Welcome to our service! We provide a quick and easy way for users to obtain a Federal Court form 1 document. Subject to eligibility.
+
+  ***Disclaimer:***  
+  **This advice is not to be taken as genuine legal advice and is not a substitute
+  for you seeking independent legal advice. This form should be checked by a lawyer.**
+
+  If you continue you accept these terms.
+buttons:
+  - "I accept and want to continue": continue
+  - "I do not accept": exit
+    url: http://www.courts.sa.gov.au/Pages/default.aspx
+---
+mandatory: True
+code: |
+  if target_variable == 'Federal Court' or target_variable == 'Federal Circuit Court':
+    endpoint['eligible']
+  else:
+    endpoint['ineligible']
+---
+# This question block asks the questions to drive the code block above.
+question: Court
+subquestion: |
+  Which court is the file to be completed?
+fields: 
+  - no label: target_variable
+    choices:
+      - Supreme Court
+      - District Court 
+      - Magistrates Court
+      - Federal Court 
+      - Federal Circuit Court
+---
+question: Name of the applicant
+subquestion: |
+  If you have any middle name/s please enter it alongside your first name
+fields:
+  - First name: CMSfirst_name
+  - Last Name: CMSlast_name
+---
+question: State
+subquestion: |
+  Please select your District Registry from the following:
+fields:
+  - no label: CMSstate
+    choices:
+      - South Australia
+      - New South Wales
+      - Western Australia
+      - Australian Capital Territory
+      - Victoria
+      - Queensland
+      - Tasmania 
+      - Northern Territory
+---
+question: Division
+subquestion: |
+  Please enter the division of law this matter concerns
+fields: 
+  - no label: CMSdivision
+    choices:
+      - Corporations
+      -	Criminal
+      -	Employment
+      -	General
+---
+question: Name of the Respondent
+subquestion: |
+  Please enter the name of the other party
+fields:
+  - no label: CMSrespondent
+---
+question: Todays date
+fields:
+  - Day: CMSday
+  - Month: CMSmonth
+  - Year: CMSyear
+---
+question: Signed by
+subquestion: |
+  Please enter the name of the person signing the document 
+fields:
+  - no label: CMSsigned_by
+---
+# This is the ineligible endpoint
+event: endpoint['ineligible']
+question: Eligibility requirements not met
+subquestion: |
+  It appears you do not meet our eligibility requirements.  This app will only prepare forms for the Federal Court and the Federal Circuit Court.
+
+buttons:
+  - Exit: exit
+    url: http://www.courts.sa.gov.au/Pages/default.aspx
+  - Restart: restart
+---
+# This is the eligible endpoint.
+event: endpoint['eligible']
+question: You are eligible
+subquestion: |
+  Congratulations **${ CMSfirst_name }**, you meet our
+  eligibility requirements. 
+  Below is a copy of your pre-filled FCA form 1, you can email this to yourself by entering an email address in the provided box below.
+  
+  Questions  | Your answers
+  -------|---------
+  Name  |  ${ CMSfirst_name } ${ CMSlast_name }
+  Other Party  |  ${ CMSrespondent }
+  State  |  ${ CMSstate }
+  Court  |  ${ target_variable }
+  Division  |  ${ CMSdivision }
+  Date  |  ${ CMSday } ${ CMSmonth } ${ CMSyear }
+  Signed by  |  ${ CMSsigned_by }
+attachment:
+  docx template file: FCA_form1.docx
+  valid formats:
+    - pdf
+buttons:
+  - Exit: exit
+  - Restart: restart
+---
