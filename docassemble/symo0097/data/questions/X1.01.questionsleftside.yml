@@ -1,0 +1,42 @@
+---
+question: Did the other person agree to pay you for this work?
+fields:
+  - no label: MJFcertainty
+    datatype: radio
+    choices:
+      - Yes. The other person agreed to pay me for this work: MJFagree_exact
+      - Yes. The other person agreed pay me for some of this work but there was other work that was not agreed to that was done and not paid for: MJFagree_inexact
+      - No. The other person did not agree to pay me for this work: MJFdisagree
+---
+question: Payment for the Work
+subquestion: |
+  Did you and the other person agree how much you would be paid for the work?
+fields:
+  - no label: MJFconsideration
+    datatype: radio
+    choices:
+      - Yes, we agreed I would be paid ${ currency(MJFpayment_agreed) } for the work: True
+      - No, we never reached a firm agreement on how much I should be paid: False
+---
+question: Who did you contract with?
+subquestion: |
+  Was the other person an adult?
+yesno: MJFcapacity
+---
+question: Written Contract
+subquestion: |
+  A 'written contract' can mean a formal contract document.
+  It can also mean any emails, texts or messages you send
+  or receive about the contract.
+  If your
+  messages contain information about:
+
+  - what work was meant to be done
+  - how much was going to be paid for that work
+  - who was going to do the work and who was going to pay
+
+  Then those messages may be enough to be a 'written contract'.
+fields:
+  - Do you or the other person have a 'written contract'?: MJFwritten_contract
+    datatype: yesnoradio
+---

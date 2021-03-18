@@ -1,0 +1,23 @@
+mandatory: True
+code: |
+  MJFsue_reason
+  if MJFsue_reason == 'MJFpromisor':
+    # Students will need to put logic in here
+    # for the promisor part of the code
+    pass
+  elif MJFsue_reason == 'MJFpromisee':
+
+    MJFwork_requested
+    MJFpayment_agreed
+    
+    if MJFcertainty == 'MJFagree_exact' and MJFconsideration == True and MJFcapacity == True:
+      MJFcontract_exists = True
+    else:
+      MJFcontract_exists = False
+
+    endpoints['final_screen']
+
+  else:
+    error_message = 'Unknown value in MJFsue_reason: {}'.format(MJFsue_reason)
+    endpoints['error_screen']
+---
